@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+option go_package = ".;proto";
+
+message Job {
+    string Token = 1;
+    string JobName = 2;
+    string Runtime = 3;
+    string UrlPath = 4;
+    int32 Frequency = 5;
+    bool Active = 6;
+    bytes Payload = 7;
+}
+
+message JobGetRequest {
+    string Runtime = 1;
+}
+
+message JobGetResponse {
+    repeated Job Jobs = 1;
+}
+
+message JobCmpRequest {
+    Job Job = 1;
+}
+
+message JobCmpResponse {
+    string Message = 1;
+}
+
+message JobRunRequest {
+    Job Job = 1;
+}
+
+message JobRunResponse {
+    string Message = 1;
+}
+
+service JobService {
+    rpc GetJob(JobGetRequest) returns (JobGetResponse);
+    rpc CmpJob(JobCmpRequest) returns (JobCmpResponse);
+    rpc RunJob(JobRunRequest) returns (JobRunResponse);
+}
